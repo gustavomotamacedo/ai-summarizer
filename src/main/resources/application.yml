@@ -1,3 +1,13 @@
 spring:
   application:
     name: AI Summarizer
+  ai:
+    openai:
+      api-key: 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
+      base-url: https://openrouter.ai/api
+      chat:
+        options:
+          model: deepseek/deepseek-r1-0528:free
+
+server:
+  port: 8080
