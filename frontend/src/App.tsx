@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
   const [userInput, setUserInput] = useState<string>("");
@@ -12,79 +12,107 @@ function App() {
   }, [aiResponse]);
 
   async function streamToText(reader: ReadableStreamDefaultReader<Uint8Array>) {
-  const decoder = new TextDecoder();
-  let result = "";
+    const decoder = new TextDecoder();
+    let result = "";
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    // decodifica o chunk e concatena
-    result += decoder.decode(value, { stream: true });
-    // aqui você pode, por exemplo, atualizar um estado React:
-    // setPartialText(prev => prev + decoder.decode(value, { stream: true }));
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      // decodifica o chunk e concatena
+      result += decoder.decode(value, { stream: true });
+      // aqui você pode, por exemplo, atualizar um estado React:
+      // setPartialText(prev => prev + decoder.decode(value, { stream: true }));
+    }
+    // flush final
+    result += decoder.decode();
+    return result;
   }
-  // flush final
-  result += decoder.decode();
-  return result;
-}
 
   const fetchAiResponse = async (input: string, type: string) => {
     const API_BASE_URL = "http://localhost:8080/api/v1";
     const requestBody = {
       summaryType: type,
-      text: input
-    }
+      text: input,
+    };
 
     setIsLoading(true);
 
-    const request = new Request(API_BASE_URL.concat("/input"), {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    });
+    try {
+      const request = new Request(API_BASE_URL.concat("/input"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-    const response = await fetch(request);
+      const response = await fetch(request);
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      for await (const chunk of response.body as any as AsyncIterable<Uint8Array>) {
+        const text = decoder.decode(chunk, { stream: true });
+        accumulated += text;
+      }
+
+      accumulated += decoder.decode(); // final flush
+      accumulated = accumulated.replaceAll("```", "");
+      setAiResponse(accumulated);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch(error) {
+      setAiResponse("<strong>Calma ai, a IA cansou.</strong><br/>Mais tarde você volta aqui e ela te responde, ok?");
+    } finally {
+      setIsLoading(false);
     }
-
-    const decoder = new TextDecoder();
-    let accumulated = "";
-
-    for await (const chunk of response.body as any as AsyncIterable<Uint8Array>) {
-      const text = decoder.decode(chunk, { stream: true });
-      accumulated += text;
-    }
-
-    accumulated += decoder.decode(); // final flush
-    accumulated = accumulated.replaceAll("```", "");
-    setAiResponse(accumulated);
-    setIsLoading(false);
-  }
+  };
 
   return (
     <>
-      <div className='card'>
+      <div className="card">
         <div className="card-header">
           <h1>AI Summarizer</h1>
           <h2>Resuma textos simples utilizando IA generativa.</h2>
-          <p>Cole seu texto no campo abaixo e selecione o formato de saída clicando em um dos botões. Após isso, aguarde seu resumo!</p>
+          <p>
+            Cole seu texto no campo abaixo e selecione o formato de saída
+            clicando em um dos botões. Após isso, aguarde seu resumo!
+          </p>
         </div>
-        <textarea className='text-area' value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder='Cole o texto a ser resumido.'/>
+        <textarea
+          className="text-area"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Cole o texto a ser resumido."
+        />
         <div>
-          <button className='button' onClick={() => {fetchAiResponse(userInput, "BULLET_POINTS")}}>Bullet points</button>
-          <button className='button' onClick={() => {fetchAiResponse(userInput, "TWEET")}}>Tweet</button>
+          <button
+            className="button"
+            onClick={() => {
+              fetchAiResponse(userInput, "BULLET_POINTS");
+            }}
+          >
+            Bullet points
+          </button>
+          <button
+            className="button"
+            onClick={() => {
+              fetchAiResponse(userInput, "TWEET");
+            }}
+          >
+            Tweet
+          </button>
         </div>
-        <div className='response'>
+        <div className={`response ${isLoading ? "vibrate-2" : ""}`}>
           {isLoading ? "Gerando seu resumo..." : ""}
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
