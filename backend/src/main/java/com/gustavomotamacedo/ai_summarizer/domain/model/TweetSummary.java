@@ -22,6 +22,7 @@ public class TweetSummary implements ISummary{
                         "3. Use até 2 hashtags relevantes.\n" +
                         "4. Inclua um call to action curto (por exemplo: “Curta e retweet!”).\n" +
                         "5. Mantenha o limite de 280 caracteres, contando espaços e hashtags.\n" +
+                        "6. Responda sempre em português brasileiro.\n" +
                         "\n" +
                         "FORMATO DE SAÍDA (HTML):\n" +
                         "- Retorne **somente** um fragmento HTML, sem `<html>`, `<head>` ou `<body>` completos.\n" +
