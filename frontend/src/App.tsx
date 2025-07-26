@@ -61,7 +61,7 @@ function App() {
     }
 
     accumulated += decoder.decode(); // final flush
-    accumulated = accumulated.replace("```", "");
+    accumulated = accumulated.replaceAll("```", "");
     setAiResponse(accumulated);
     setIsLoading(false);
   }
