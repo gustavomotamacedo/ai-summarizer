@@ -20,7 +20,14 @@ public class BulletPointSummary implements ISummary {
                 "2. Use no máximo 8–10 bullets (ou personalize o número conforme sua necessidade).\n" +
                 "3. Seja sucinto: cada ponto não deve ultrapassar 20 palavras.\n" +
                 "4. Mantenha termos-chave e conceitos importantes.\n" +
-                "5. Não adicione informação nova ou opinião — apenas reformule o que já está no texto.\n";
+                "5. Não adicione informação nova ou opinião — apenas reformule o que já está no texto.\n" +
+                "\n" +
+                "FORMATO DE SAÍDA (HTML):\n" +
+                "- Retorne **somente** um fragmento HTML, sem `<html>`, `<head>` ou `<body>` completos.\n" +
+                "- Envolva toda a lista em `<ul>` e cada bullet point em `<li>`.\n" +
+                "- Envolva termos-chave e conceitos importantes em `<strong>`.\n" +
+                "- Não inclua a tag `<div>`, pois a resposta será inserida dentro de uma `<div>` existente na página.\n";
+
     }
 
     @Override
