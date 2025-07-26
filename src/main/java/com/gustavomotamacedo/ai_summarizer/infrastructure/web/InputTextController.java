@@ -1,5 +1,6 @@
 package com.gustavomotamacedo.ai_summarizer.infrastructure.web;
 
+import com.gustavomotamacedo.ai_summarizer.domain.model.BulletPointSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.model.ChatModel;
@@ -17,16 +18,18 @@ import java.util.Locale;
 public class InputTextController {
 
     private final ChatModel chatModel;
+    private final BulletPointSummary bulletPointSummary;
     private static final Logger log = LoggerFactory.getLogger(InputTextController.class);
 
     public InputTextController(ChatModel chatModel) {
         this.chatModel = chatModel;
+        this.bulletPointSummary = new BulletPointSummary();
     }
 
     @PostMapping("/input")
     public ResponseEntity<String> inputText(@RequestBody String text) {
         try {
-            String response = this.chatModel.call("Say hi to thomas!");
+            String response = this.chatModel.call(bulletPointSummary.applyPrompt(text.toLowerCase()));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Error processing chat data: {}", e.getMessage(), e);
