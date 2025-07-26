@@ -10,7 +10,7 @@ function App() {
           <button className='button'>Bullet points</button>
           <button className='button'>Tweet</button>
         </div>
-        <div className='response'></div>
+        <span className='response'></span>
       </div>
     </>
   )
