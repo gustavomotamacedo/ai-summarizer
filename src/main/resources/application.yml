@@ -4,11 +4,11 @@ spring:
 
   ai:
     openai:
-      api-key: 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
+      api-key: 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
       base-url: https://openrouter.ai/api
       chat:
         options:
-          model: deepseek/deepseek-r1-0528:free
+          model: qwen/qwen3-235b-a22b-2507:free
 
 server:
   port: 8080
