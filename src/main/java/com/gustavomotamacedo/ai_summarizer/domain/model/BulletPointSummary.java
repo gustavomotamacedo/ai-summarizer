@@ -4,7 +4,7 @@ public class BulletPointSummary implements ISummary {
     private String prompt;
 
     public BulletPointSummary() {
-
+        this.prompt = "testing ";
     }
 
     @Override
