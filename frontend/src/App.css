@@ -44,17 +44,18 @@
 .text-area {
   width: calc(100vw - 50vh);
   height: calc(100vh - 30vw);
-  padding: 1rem;
+  padding: 2rem;
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 2rem;
 }
 
 .card-header {
-  background-color: rgba(240, 248, 255, 0.562);
+  background-color: rgba(240, 248, 255, .2);
   color: black;
   border-radius: 1rem;
   padding: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 
   box-shadow: 10px 10px 37px 43px rgba(240, 248, 255, .2);
   -webkit-box-shadow: 10px 10px 37px 43px rgba(240, 248, 255, .2);
