@@ -1,8 +1,29 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    container_name: ai-summarizer
+  aisummarizer:
+    container_name: aisummarizer
+    networks:
+      - web
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    environment:
+      - OTEL_SERVICE_NAME=aisummarizer
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=jaeger
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
     ports:
       - "8080:8080"
+  jaeger:
+    container_name: jaeger
+    networks:
+      - web
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 16686:16686
+      - 14250:14250
+
+networks:
+  web:
+    name: web
