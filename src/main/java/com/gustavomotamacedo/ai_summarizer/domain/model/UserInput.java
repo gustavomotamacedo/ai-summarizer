@@ -2,12 +2,12 @@ package com.gustavomotamacedo.ai_summarizer.domain.model;
 
 public class UserInput {
     private String text;
-    private SummaryTypes summaryType;
+    private String summaryType;
 
     public UserInput() {
     }
 
-    public UserInput(String text, SummaryTypes summaryType) {
+    public UserInput(String text, String summaryType) {
         this.text = text;
         this.summaryType = summaryType;
     }
@@ -20,11 +20,11 @@ public class UserInput {
         this.text = text;
     }
 
-    public SummaryTypes getSummaryType() {
+    public String getSummaryType() {
         return summaryType;
     }
 
-    public void setSummaryType(SummaryTypes summaryType) {
+    public void setSummaryType(String summaryType) {
         this.summaryType = summaryType;
     }
 }
