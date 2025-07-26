@@ -8,25 +8,8 @@ function App() {
 
   useEffect(() => {
     const responseDiv = document.querySelector(".response");
-    responseDiv.innerHTML = aiResponse;
+    if (responseDiv) responseDiv.innerHTML = aiResponse;
   }, [aiResponse]);
-
-  async function streamToText(reader: ReadableStreamDefaultReader<Uint8Array>) {
-    const decoder = new TextDecoder();
-    let result = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      // decodifica o chunk e concatena
-      result += decoder.decode(value, { stream: true });
-      // aqui você pode, por exemplo, atualizar um estado React:
-      // setPartialText(prev => prev + decoder.decode(value, { stream: true }));
-    }
-    // flush final
-    result += decoder.decode();
-    return result;
-  }
 
   const fetchAiResponse = async (input: string, type: string) => {
     const API_BASE_URL = "http://localhost:8081/api/v1";
@@ -56,6 +39,7 @@ function App() {
       const decoder = new TextDecoder();
       let accumulated = "";
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       for await (const chunk of response.body as any as AsyncIterable<Uint8Array>) {
         const text = decoder.decode(chunk, { stream: true });
         accumulated += text;
