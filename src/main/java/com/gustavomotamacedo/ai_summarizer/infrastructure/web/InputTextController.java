@@ -1,12 +1,18 @@
 package com.gustavomotamacedo.ai_summarizer.infrastructure.web;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpResponse;
+import java.util.Locale;
 
 @RestController
-@RequestMapping("${api.base-path}/input")
+@RequestMapping("api/v1")
 public class InputTextController {
 
-
+    @PostMapping("/input")
+    public ResponseEntity<String> inputText(@RequestBody String text) {
+        return ResponseEntity.ok(text.toLowerCase(Locale.ROOT));
+    }
 
 }
