@@ -21,6 +21,7 @@ public class BulletPointSummary implements ISummary {
                 "3. Seja sucinto: cada ponto não deve ultrapassar 20 palavras.\n" +
                 "4. Mantenha termos-chave e conceitos importantes.\n" +
                 "5. Não adicione informação nova ou opinião — apenas reformule o que já está no texto.\n" +
+                "6. Responda sempre em português brasileiro.\n" +
                 "\n" +
                 "FORMATO DE SAÍDA (HTML):\n" +
                 "- Retorne **somente** um fragmento HTML, sem `<html>`, `<head>` ou `<body>` completos.\n" +
