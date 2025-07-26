@@ -9,28 +9,23 @@ function App() {
     console.log(aiResponse);
   }, [aiResponse]);
 
-  const fetchAiResponse = async (input: string) => {
+  const fetchAiResponse = async (input: string, type: string) => {
     const API_BASE_URL = "http://localhost:8080/api/v1";
-    const bulletPointsBody = {
-      summaryType: "BULLET_POINTS",
-      text: ""
-    }
-     const tweetBody = {
-      summaryType: "BULLET_POINTS",
-      text: ""
-    }
-    
-    switch (key) {
-      case value:
-        
-        break;
-    
-      default:
-        break;
+    const requestBody = {
+      summaryType: type,
+      text: input
     }
 
+    const response = await fetch(API_BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
     console.log(API_BASE_URL.concat("/input"));
-    console.log(input);
+    console.log(requestBody);
+    console.log(response);
   }
 
   return (
@@ -38,8 +33,8 @@ function App() {
       <div className='card'>
         <input type="text" className='text-area' value={userInput} onChange={e => setUserInput(e.target.value)} placeholder='Cole o texto a ser resumido.'/>
         <div>
-          <button className='button' onClick={() => {fetchAiResponse(userInput)}}>Bullet points</button>
-          <button className='button' onClick={() => {fetchAiResponse(userInput)}}>Tweet</button>
+          <button className='button' onClick={() => {fetchAiResponse(userInput, "BULLET_POINTS")}}>Bullet points</button>
+          <button className='button' onClick={() => {fetchAiResponse(userInput, "TWEET")}}>Tweet</button>
         </div>
         <span className='response'>{aiResponse}</span>
       </div>
