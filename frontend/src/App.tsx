@@ -4,9 +4,11 @@ import './App.css'
 function App() {
   const [userInput, setUserInput] = useState<string>("");
   const [aiResponse, setAiResponse] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(aiResponse);
+    const responseDiv = document.querySelector(".response");
+    responseDiv.innerHTML = aiResponse;
   }, [aiResponse]);
 
   async function streamToText(reader: ReadableStreamDefaultReader<Uint8Array>) {
@@ -33,6 +35,8 @@ function App() {
       text: input
     }
 
+    setIsLoading(true);
+
     const request = new Request(API_BASE_URL.concat("/input"), {
       method: "POST",
       headers: {
@@ -57,19 +61,26 @@ function App() {
     }
 
     accumulated += decoder.decode(); // final flush
+    accumulated = accumulated.replace("```", "");
     setAiResponse(accumulated);
+    setIsLoading(false);
   }
 
   return (
     <>
       <div className='card'>
-        <input type="text" className='text-area' value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder='Cole o texto a ser resumido.'/>
+        <div className="card-header">
+          <h1>AI Summarizer</h1>
+          <h2>Resuma textos simples utilizando IA generativa.</h2>
+          <p>Cole seu texto no campo abaixo e selecione o formato de saída clicando em um dos botões. Após isso, aguarde seu resumo!</p>
+        </div>
+        <textarea className='text-area' value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder='Cole o texto a ser resumido.'/>
         <div>
           <button className='button' onClick={() => {fetchAiResponse(userInput, "BULLET_POINTS")}}>Bullet points</button>
           <button className='button' onClick={() => {fetchAiResponse(userInput, "TWEET")}}>Tweet</button>
         </div>
         <div className='response'>
-          {aiResponse}
+          {isLoading ? "Gerando seu resumo..." : ""}
         </div>
       </div>
     </>
