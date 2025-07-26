@@ -29,7 +29,7 @@ function App() {
   }
 
   const fetchAiResponse = async (input: string, type: string) => {
-    const API_BASE_URL = "http://localhost:8080/api/v1";
+    const API_BASE_URL = "http://localhost:8081/api/v1";
     const requestBody = {
       summaryType: type,
       text: input,
