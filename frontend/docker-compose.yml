@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  aisummarizer-app:
+    container_name: aisummarizer-app
+    networks:
+      - web
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+
+networks:
+  web:
+    name: web
