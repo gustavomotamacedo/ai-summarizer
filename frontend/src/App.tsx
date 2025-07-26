@@ -68,7 +68,9 @@ function App() {
           <button className='button' onClick={() => {fetchAiResponse(userInput, "BULLET_POINTS")}}>Bullet points</button>
           <button className='button' onClick={() => {fetchAiResponse(userInput, "TWEET")}}>Tweet</button>
         </div>
-        <span className='response'>{aiResponse}</span>
+        <div className='response'>
+          {aiResponse}
+        </div>
       </div>
     </>
   )
