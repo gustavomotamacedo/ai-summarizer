@@ -1,5 +1,8 @@
 package com.gustavomotamacedo.ai_summarizer.domain.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BulletPointSummary implements ISummary {
     private String prompt;
 
