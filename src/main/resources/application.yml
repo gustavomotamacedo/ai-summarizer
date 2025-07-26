@@ -1,9 +1,10 @@
 spring:
   application:
     name: AI Summarizer
+
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY}
+      api-key: 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
       base-url: https://openrouter.ai/api
       chat:
         options:
@@ -11,6 +12,3 @@ spring:
 
 server:
   port: 8080
-
-api:
-  base-path: /api/v1
