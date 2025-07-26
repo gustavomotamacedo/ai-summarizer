@@ -10,7 +10,7 @@ public class BulletPointSummary implements ISummary {
                 "[USER]\n" +
                 "Por favor, resuma o seguinte texto em bullet points:\n" +
                 "\n" +
-                "“<insira aqui o texto completo a ser resumido>”\n" +
+                "“<replace>”\n" +
                 "\n" +
                 "REQUISITOS:\n" +
                 "1. Cada bullet point deve conter **apenas uma ideia** central.\n" +
@@ -22,6 +22,6 @@ public class BulletPointSummary implements ISummary {
 
     @Override
     public String applyPrompt(String userText) {
-        return prompt.concat(userText);
+        return prompt.replace("<replace>", userText);
     }
 }
