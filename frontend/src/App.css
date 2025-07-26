@@ -45,6 +45,7 @@
   width: calc(100vw - 50vh);
   height: calc(100vh - 30vw);
   padding: 1rem;
+  color: white;
 }
 
 .button {
