@@ -29,6 +29,7 @@ public class InputTextController {
     @PostMapping("/input")
     public ResponseEntity<String> inputText(@RequestBody String text) {
         try {
+            if ()
             String response = this.chatModel.call(bulletPointSummary.applyPrompt(text.toLowerCase()));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
