@@ -22,8 +22,10 @@ services:
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
+      - OPENROUTER_API_KEY=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
+      - OPENROUTER_AI_MODEL=deepseek/deepseek-r1-0528-qwen3-8b:free
     ports:
-      - 8081:8080
+      - 8081:8081
   jaeger:
     container_name: jaeger
     networks:
