@@ -12,6 +12,9 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
+      env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      OPENROUTER_AI_MODEL: ${{ secrets.OPENROUTER_AI_MODEL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
